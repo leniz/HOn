@@ -16,19 +16,3 @@ phon <- function(pValues,
 return(list(ml, pconj.aux))
 }
 
-
-pr3.aux <- pr3
-unl <- function(x)
-  {
-  x.aux <- x
-  xstr <- vector("list", list.depth(x)-1)
-  for (j in 1:(list.depth(x)-1)){
-    xstr[[j]] <- lapply(x.aux,length)
-    x.aux <- unlist(x.aux, recursive = F)
-    
-  }
-  return(list(vecs=x.aux, str = xstr))
-} 
-
-
-unl(pr3)

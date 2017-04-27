@@ -17,10 +17,10 @@ phon <- function(pValues,
   ul <- as.integer(ml[[depth]]*kappa)
   ul[ul<ml[[depth]]*kappa] <- ul[ul<ml[[depth]]*kappa] + 1
   # p.pool
-  for (j in 1:length(pconj.aux)){pconj[[depth]] <- p.pool(pconj.aux[[j]], u=ul[j])}
+  for (j in 1:length(pconj.aux)){pconj[[depth]] <- c(pconj[[depth]],p.pool(pconj.aux[[j]], u=ul[j]) )}
   for (jj in 1:(depth-1)){
-    for (j in 1:length(ml[[2]])){pconj[[2]] <- c(pconj[[2]], p.pool(pconj[[3]][stru[[2]]==j], u=1) )}
-    for (j in 1:length(ml[[1]])){pconj[[1]] <- c(pconj[[1]], p.pool(pconj[[2]][stru[[1]]==j], u=1) )}
+    idx <- depth-jj
+    for (j in 1:length(ml[[idx]])){pconj[[idx]] <- c(pconj[[idx]], p.pool(pconj[[idx+1]][stru[[idx]]==j], u=1) )}
   }
   
   # 

@@ -1,18 +1,25 @@
 phon <- function(pValues,
-                     alpha = 0.05,
-                     kappa = 0.001){
+                 alpha = 0.05,
+                 kappa = 0.001){
   result <- list()
   ## pool the p-values, partial conjunction
   depth <- list.depth(pValues)
+  if(depth < 2){stop("the list of families has depth < 2")}
+  # if(depth == 0){
+  #   if (is.vector(pValues,mode="numeric")){
+  #     pValues <-list(pValues)
+  #     depth <-1
+  #   }
+  #   }
   pconj <- vector("list",depth)
   pconj.aux <- pValues
-  ml <- vector("list", depth)
-  for (j in 1:(depth-1)){
-   ml[[j]] <- unlist(lapply(pconj.aux,length))
-   pconj.aux <- unlist(pconj.aux, recursive = F)
+  ml <- vector("list", depth) # families' sizes
+  ml[[1]] <- unlist(lapply(pconj.aux,length))
+  for (j in 2:(depth)){
+    pconj.aux <- unlist(pconj.aux, recursive = F)
+    ml[[j]] <- unlist(lapply(pconj.aux,length))
   }
   
-  ml[[depth]] <- unlist(lapply(pconj.aux,length)) # size of the families
   stru <- lapply(ml, function(x) rep(1:length(x),x))
   # obtain u_l for partial conjunction
   ul <- as.integer(ml[[depth]]*kappa)
@@ -43,5 +50,5 @@ phon <- function(pValues,
   }
   
   
-return(list(ml=ml, pconj.aux=pconj.aux,ul=ul,pconj=pconj,scrn=scrn,idx=idx,result=result))
+  return(list(ml=ml, pconj.aux=pconj.aux,ul=ul,pconj=pconj,scrn=scrn,idx=idx,result=result))
 }

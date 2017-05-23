@@ -43,5 +43,5 @@ phon <- function(pValues,
   }
   
   
-return(list(ml=ml, pconj.aux=pconj.aux,ul=ul,pconj=pconj,scrn=scrn,idx=idx,result=result))
+return(list(ml=ml, pconj.aux=pconj.aux,ul=ul,pconj=pconj,scrn=scrn,idx=idx,rejected=result))
 }

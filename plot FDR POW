@@ -1,0 +1,57 @@
+# Here we plot (and save)
+
+plot2pdf = FALSE; ruta = "~/R/phon"; bs = 1;  # to save or not to save
+
+####Configuration of the hypotheses, borrar y pasar a otro script later
+n.supfam <- 3
+m <- n.supfam*4*100
+k <- 12 #48  # k <- 12
+alpha = 0.05
+kappa =0.001
+sfstru <- c(1,1,1,2,2,2,3,3,4,4,5,5)
+
+
+pi = array(1/k,k)
+pinull <- array(.8,k)
+pinull[c(1:2)] <- .1
+# pinull[c(3:4)] <- .5
+B <- 100
+mu<-c(0, .5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5) 
+
+#####
+
+# PLOT FDR --
+if(plot2pdf) pdf(file = paste(ruta,"/FDR conf ",bs,".pdf",sep=""))  # open PDF
+plot(mu,ofdrLSU,main="",xlab=expression(mu),ylab="gFDR",type="l",ylim=c(0,.1))
+points(mu,ofdrLSU,pch=1)
+lines(mu,ofdrHO,lty=1, col="red")
+points(mu,ofdrHO,pch=2, col="red")
+lines(mu,ofdrHON,lty=1, col="blue")
+points(mu,ofdrHON,pch=4, col="blue")
+lines(mu, array(0.05,length(mu)),lty = 1, col ="green")
+
+legend("topright",
+       c(expression(varphi^{LSU}), expression(varphi^{HO}), expression(varphi^{HON})),
+       lty=c(1,1,1),
+       pch=c(1,2,4),
+       merge=TRUE, horiz=TRUE)
+if(plot2pdf) dev.off() #close PDF
+
+# PLOT POWER --
+if(plot2pdf) pdf(file = paste(ruta,"POW config ",bs,".pdf",sep=""))  # open PDF
+plot(mu,powLSU,main="",xlab=expression(mu),ylab="power",type="l",ylim=c(0,1))
+points(mu,powLSU,pch=1)
+lines(mu,powHO,lty=1, col="red")
+points(mu,powHO,pch=2, col="red")
+lines(mu,powHON,lty=1, col="blue")
+points(mu,powHON,pch=4, col="blue")
+
+
+legend("topleft",
+       c(expression(varphi^{LSU}), expression(varphi^{HO}), expression(varphi^{HON})),
+       lty=c(1,1,1),
+       pch=c(1,2,4),
+       merge=TRUE)
+if(plot2pdf) dev.off()
+
+

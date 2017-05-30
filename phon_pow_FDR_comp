@@ -8,8 +8,118 @@
 # Input:  m*pi    the vector of the sizes of the families                            
 #         pinull  the vector with the proportions of the true nulls in each family
 #         mu      the vector of the effect sizes
+#         alpha   level of the test
+#         kappa   tunning parameter
+#         k       number of families
+#         sfstru   struct. of the superfamilies e.g. if there are k=9 families grouped in superfamilies of 3, 
+#                 sfstru = c(1,1,1,2,2,2,3,3,3)
 #
 # Output: lists with the gFDR, FDR per family, power...
 #     
+# needs packages: mutoss...
+
+# FDR and power as the mean of FDP and \hat{power} = #true rejections/#false nulls
+# gFDR
+ofdrLSU <- numeric()
+ofdrHO  <- numeric()
+ofdrHON <- numeric()
+# FDR per family
+ffdrLSU <- list()
+ffdrHO  <- list()
+ffdrHON <- list()
+# global Power
+powLSU <- numeric()
+powHO  <- numeric()
+powHON <- numeric()
+
+# jj index for the different effect sizes 
+# for (jj in 1:length(mu))
+# oFDP
+ofdpLSU <- numeric()
+ofdpHO  <- numeric()
+ofdpHON <- numeric()
+# FDP per family
+ffdpLSU <- array(0, dim=c(k,B))
+ffdpHO  <- array(0, dim=c(k,B))
+ffdpHON <- array(0, dim=c(k,B))
+#  Power
+popLSU <- numeric()
+popHO  <- numeric()
+popHON <- numeric()
+
+# repeat the next B times 
+# for (ii in 1:B)
+data <- list()
+datan <- list()
+dataflat <- numeric()
+for (j in 1:k){#Simulate data
+  truenulls<-rnorm(n=round(m*pi[[j]]*pinull[[j]]), mean=0, sd=1)
+  falsenulls<-rnorm(n=round(m*pi[[j]]*(1-pinull[[j]])), mean=mu[jj], sd=1)
+  
+  pvaluelist<-c(pnorm(truenulls,lower.tail=FALSE),pnorm(falsenulls,lower.tail=FALSE))
+  
+  data<- c(data,list(pvaluelist))
+  dataflat<- c(dataflat, pvaluelist)
+}
+# data with stru. (to use it in phi^HOn procedure)
+for (i in 1:length(sfstru)) datan <- c(datan, list(data[[sfstru==i]])) 
+
+# apply procedures (obtain p-values)
+LSUflat <- BH(dataflat, 0.05, silent = TRUE)$rejected
+idxfam <- rep(1:k,m*pi)
+LSU <- list()
+for (i in 1:k) LSU <- c(LSU,list(LSUflat[idxfam==i])) # give fam. stru. to p-v. from 'flat' proc.
+HO <- hierasymptkappa(data,alpha,kappa)$rejected
+HON <- phon(datan,alpha,kappa)$rejected
+
+# calculate global- and per family- FDP and prop. of #correct rej. over #false null hyp. (for power).
+# LSU
+R <- integer()
+K <- integer()
+for (i in 1:k){
+  x<-c(1:(m*pi[[i]]))
+  rej<-x[LSU[[i]]==TRUE]
+  Ri<-length(rej)
+  Ki<-length(rej[rej<=(pinull[[i]]*(m*pi[[i]]))])
+  K<-c(K,Ki) # false discoveries 
+  R<-c(R,Ri) # rejections
+}
+ofdpLSU <- c(ofdpLSU, sum(K)/max(sum(R),1))
+popLSU <-c(popLSU, (sum(R)-sum(K))/sum((1-pinull)*pi*m))
+ffdpLSU[,ii] <- K/R
+# HO
+R <- integer()
+K <- integer()
+for (i in 1:k){
+  x<-c(1:(m*pi[[i]]))
+  rej<-x[HO[[i]]==TRUE]
+  Ri<-length(rej)
+  Ki<-length(rej[rej<=(pinull[[i]]*(m*pi[[i]]))])
+  K<-c(K,Ki) # false discoveries 
+  R<-c(R,Ri) # rejections
+}
+ofdpHO <- c(ofdpHO, sum(K)/max(sum(R),1))
+popHO <-c(popHO, (sum(R)-sum(K))/sum((1-pinull)*pi*m))
+ffdpHO[,ii] <- K/R
+# HOn
+R <- integer()
+K <- integer()
+for (i in 1:k){
+  x<-c(1:(m*pi[[i]]))
+  rej<-x[HON[[i]]==TRUE]
+  Ri<-length(rej)
+  Ki<-length(rej[rej<=(pinull[[i]]*(m*pi[[i]]))])
+  K<-c(K,Ki) # false discoveries 
+  R<-c(R,Ri) # rejections
+}
+ofdpHON <- c(ofdpHON, sum(K)/max(sum(R),1))
+popHON <-c(popHON, (sum(R)-sum(K))/sum((1-pinull)*pi*m))
+ffdpHON[,ii] <- K/R
+
+
+
+
+
+
 
 

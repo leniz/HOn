@@ -16,7 +16,15 @@
 #
 # Output: lists with the gFDR, FDR per family, power...
 #     
-# needs   mutoss... hierasymptkappa, phon
+# needs   mutoss... hierasymptkappa, phon,ppool,
+
+# library(knitr)
+library(mutoss)
+source('~/R/phon/phon.R')
+source('~/R/phon/ppool.R')
+source('~/R/phon/listdepth.R')
+source('~/R/codeANDdata/hierasymptkappa.R')
+
 
 # FDR and power as the mean of FDP and \hat{power} = #true rejections/#false nulls
 # gFDR
@@ -125,4 +133,8 @@ for (jj in 1:length(mu)){
   powHON <- c(powHON, mean(popHON))
   # ffdrLSU <- c(ffdrLSU, list(lapply(ffdpLSU, rowMeans)))
 }
+
+
+
+
 

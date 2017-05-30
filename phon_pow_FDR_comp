@@ -1,0 +1,15 @@
+# We compare the procedure phi_HOn (n=3) with  phi_HO and LSU
+# (two procedures for structured families and one procedure which does not use the family structure)
+# one-sided normal means problem T=(T_1, ..., T_m), T~N(mu,I_m), mu=(mu_1, ..., mu_m)
+# H_j : {mu_j = 0}    vs    K_j : {mu_j > 0},   j \in {1, ..., m}
+# p-values are given by: p_j(t_j) = P_{H_j}(T_j > t_j) = 1 - Phi(t_j)   [ Phi = cdf of N(0,1)]
+# we assume that the first T_j's have a true null distr. 
+
+# Input:  m*pi    the vector of the sizes of the families                            
+#         pinull  the vector with the proportions of the true nulls in each family
+#         mu      the vector of the effect sizes
+#
+# Output: lists with the gFDR, FDR per family, power...
+#     
+
+

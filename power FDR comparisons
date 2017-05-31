@@ -32,9 +32,10 @@ ofdrLSU <- numeric()
 ofdrHO  <- numeric()
 ofdrHON <- numeric()
 # FDR per family
-ffdrLSU <- list()
-ffdrHO  <- list()
-ffdrHON <- list()
+ffdrLSU <- numeric()
+ffdrHO  <- numeric()
+ffdrHON <- numeric()
+famFDR <- numeric()
 # global Power
 powLSU <- numeric()
 powHO  <- numeric()
@@ -131,10 +132,15 @@ for (jj in 1:length(mu)){
   powLSU <- c(powLSU, mean(popLSU))
   powHO <- c(powHO, mean(popHO))
   powHON <- c(powHON, mean(popHON))
-  # ffdrLSU <- c(ffdrLSU, list(lapply(ffdpLSU, rowMeans)))
+  ffdrLSU <- rbind(ffdrLSU, rowMeans(ffdpLSU))
+  ffdrHO <- rbind(ffdrHO, rowMeans(ffdpHO))
+  ffdrHON <- rbind(ffdrHON, rowMeans(ffdpHON))
+  famFDR <- rbind(famFDR, rowMeans(ffdpLSU),rowMeans(ffdpHO),rowMeans(ffdpHON))
 }
 
 
+results <- list(ofdrLSU=ofdrLSU,ofdrHO=ofdrHO,ofdrHON=ofdrHON,powLSU=powLSU,powHO=powHO,
+                powHON=powHON,ffdrLSU=ffdrLSU,ffdrHON=ffdrHON,ffdrLSU=ffdrLSU)
 
 
 

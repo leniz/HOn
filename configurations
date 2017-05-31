@@ -1,0 +1,159 @@
+savedata = TRUE; ruta = "~/R/phon/Results";  # to save or not to save
+# Setting - A1 -----------------------------------------------------------------------
+bs = "A1" # configuration number
+n.supfam <- 3
+m <- n.supfam*4*1000
+k <- 12
+alpha = 0.05
+kappa =0.001
+
+# x all null families, the first one containing only 100 true null hyp.
+pi = array(1/k,k)
+pinull <- array(1,k)
+pinull[1] <- .1
+B <- 10
+mu<-c(0, .5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5)
+sfstru <- c(1,1,1,1,2,2,2,2,3,3,3,3)
+
+# Run the processes (computing and plotting)
+source("power_FDR_comparisons.R")
+settings = list(n.supfam = n.supfam, k = k, alpha = alpha, kappa = kappa, pi = pi, 
+                pinull = pinull, B = B, mu = mu, sfstru = sfstru)
+if(savedata) save(settings,results,file = paste(ruta,"/data_config_",bs,".RData",sep=""))
+
+source("plot_FDR_POW.R")
+
+# Setting - A2-------------------------------------------------------------------------
+bs = "A2" # configuration number
+n.supfam <- 3
+m <- n.supfam*4*1000
+k <- 12
+alpha = 0.05
+kappa =0.001
+
+# x all null families, the first one containing only 100 true null hyp.
+pi = array(1/k,k)
+pinull <- array(1,k)
+pinull[c(1,5,9)] <- .1
+B <- 10
+mu<-c(0, .5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5)
+sfstru <- c(1,1,1,1,2,2,2,2,3,3,3,3)
+
+# Run the processes (computing and plotting)
+source("power_FDR_comparisons.R")
+settings = list(n.supfam = n.supfam, k = k, alpha = alpha, kappa = kappa, pi = pi, 
+                pinull = pinull, B = B, mu = mu, sfstru = sfstru)
+if(savedata) save(settings,results,file = paste(ruta,"/data_config_",bs,".RData",sep=""))
+
+source("plot_FDR_POW.R")
+
+# Setting - A3-------------------------------------------------------------------------
+bs = "A3" # configuration number
+n.supfam <- 3
+m <- n.supfam*4*1000
+k <- 12
+alpha = 0.05
+kappa =0.001
+
+# x all null families, the first one containing only 100 true null hyp.
+pi = array(1/k,k)
+pinull <- array(.8,k)
+pinull[c(1:4)] <- .1
+pinull[c(5:8)] <- .5
+B <- 10
+mu<-c(0, .5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5)
+sfstru <- c(1,1,1,1,2,2,2,2,3,3,3,3)
+
+# Run the processes (computing and plotting)
+source("power_FDR_comparisons.R")
+settings = list(n.supfam = n.supfam, k = k, alpha = alpha, kappa = kappa, pi = pi, 
+                pinull = pinull, B = B, mu = mu, sfstru = sfstru)
+if(savedata) save(settings,results,file = paste(ruta,"/data_config_",bs,".RData",sep=""))
+
+source("plot_FDR_POW.R")
+
+# Setting - B1------------------------------------------------------------------------
+bs = "B1" # number of setting 
+CONFIG = 2  # 1 o 2, structure of the families
+n.supfam <- 8
+m <- n.supfam*6*1000
+k <- 48  # k <- 12
+alpha = 0.05
+kappa =0.001
+
+# x all null families, the first one containing only 100 true null hyp.
+pi = array(1/k,k)
+pinull <- array(.8,k)
+pinull <- array(1,k)
+pinull[c(1)] <- .1
+B <- 10
+mu<-c(0, .5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5)
+sfstru <- c(1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,
+            5,5,5,5,5,5,6,6,6,6,6,6,7,7,7,7,7,7,8,8,8,8,8,8)
+
+# Run the processes (computing and plotting)
+source("power_FDR_comparisons.R")
+settings = list(n.supfam = n.supfam, k = k, alpha = alpha, kappa = kappa, pi = pi, 
+                pinull = pinull, B = B, mu = mu, sfstru = sfstru)
+if(savedata) save(settings,results,file = paste(ruta,"/data_config_",bs,".RData",sep=""))
+
+source("plot_FDR_POW.R")
+
+# Setting - B2 ------------------------------------------------------------------------
+bs = "B2" # number of setting 
+CONFIG = 2  # 1 o 2, structure of the families
+n.supfam <- 8
+m <- n.supfam*6*1000
+k <- 48  # k <- 12
+alpha = 0.05
+kappa =0.001
+
+# x all null families, the first one containing only 100 true null hyp.
+pi = array(1/k,k)
+pinull <- array(.8,k) # prop of true nulls in each family
+pinull[c(1,7,13,19)] <- .1
+pinull[c(1)] <- .1
+B <- 10
+mu<-c(0, .5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5) 
+sfstru <- c(1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,
+            5,5,5,5,5,5,6,6,6,6,6,6,7,7,7,7,7,7,8,8,8,8,8,8)
+
+# Run the processes (computing and plotting)
+source("power_FDR_comparisons.R")
+settings = list(n.supfam = n.supfam, k = k, alpha = alpha, kappa = kappa, pi = pi, 
+                pinull = pinull, B = B, mu = mu, sfstru = sfstru)
+if(savedata) save(settings,results,file = paste(ruta,"/data_config_",bs,".RData",sep=""))
+
+source("plot_FDR_POW.R")
+
+# Setting - B3------------------------------------------------------------------------
+bs = "B3" # number of setting 
+CONFIG = 2  # 1 o 2, structure of the families
+n.supfam <- 8
+m <- n.supfam*6*1000
+k <- 48  # k <- 12
+alpha = 0.05
+kappa =0.001
+
+# x all null families, the first one containing only 100 true null hyp.
+pi = array(1/k,k)
+pinull <- array(.8,k) # prop of true nulls in each family
+pinull[1:6]   <- .1
+pinull[7:12]  <- .2
+pinull[13:18] <- .3
+pinull[19:24] <- .4
+pinull[25:30] <- .5
+pinull[31:36] <- .6
+pinull[37:42] <- .7
+B <- 10
+mu<-c(0, .5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5)
+sfstru <- c(1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,
+            5,5,5,5,5,5,6,6,6,6,6,6,7,7,7,7,7,7,8,8,8,8,8,8)
+
+# Run the processes (computing and plotting)
+source("power_FDR_comparisons.R")
+settings = list(n.supfam = n.supfam, k = k, alpha = alpha, kappa = kappa, pi = pi, 
+                pinull = pinull, B = B, mu = mu, sfstru = sfstru)
+if(savedata) save(settings,results,file = paste(ruta,"/data_config_",bs,".RData",sep=""))
+
+source("plot_FDR_POW.R")

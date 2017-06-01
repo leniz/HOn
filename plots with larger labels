@@ -1,0 +1,48 @@
+#-------------------------------------
+ruta = "C:/Users/Magda/Documents/LaTeX/cambridge";
+ofdrLSU = results$ofdrLSU
+ofdrHO = results$ofdrHO
+ofdrHON = results$ofdrHON
+bs = "A2"
+mu = settings$mu
+
+pdf(file = paste(ruta,"/FDR_conf_",bs,".pdf",sep=""))
+
+plot(mu,ofdrLSU,main="",xlab=expression(mu),ylab="gFDR",type="l",ylim=c(0,.1),lwd=2,cex.axis=1.7,cex.lab=1.7)
+points(mu,ofdrLSU,pch=1)
+lines(mu,ofdrHO,lty=1, col="red", lwd=2)
+points(mu,ofdrHO,pch=2, col="red")
+lines(mu,ofdrHON,lty=1, col="blue",lwd=2)
+points(mu,ofdrHON,pch=4, col="blue")
+lines(mu, array(0.05,length(mu)),lty = 2, lwd=1.3)
+
+legend("topright",
+       c(expression(varphi^{LSU}), expression(varphi^{HO}), expression(varphi^{HON})),
+       lty=c(1,1,1),
+       pch=c(1,2,4),
+       col = c("black","red","blue"),
+       merge=TRUE, horiz=TRUE, cex = 1.7)
+dev.off() #close PDF
+#---------------------------------------------
+powLSU = results$powLSU
+powHO = results$powHO
+powHON = results$powHON
+bs = "A2"
+mu = settings$mu
+
+pdf(file = paste(ruta,"/POW_config_",bs,".pdf",sep=""))
+
+plot(mu,powLSU,main="",xlab=expression(mu),ylab="power",type="l",ylim=c(0,1),lwd=2,cex.axis=1.7,cex.lab=1.7)
+points(mu,powLSU,pch=1)
+lines(mu,powHO,lty=1, col="red", lw=2)
+points(mu,powHO,pch=2, col="red")
+lines(mu,powHON,lty=1, col="blue",lw=2)
+points(mu,powHON,pch=4, col="blue")
+
+legend("topleft",
+       c(expression(varphi^{LSU}), expression(varphi^{HO}), expression(varphi^{HON})),
+       lty=c(1,1,1),
+       pch=c(1,2,4),
+       col = c("black","red","blue"),
+       merge=TRUE, cex = 1.7)
+dev.off() #close PDF
